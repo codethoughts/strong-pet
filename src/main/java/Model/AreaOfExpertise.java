@@ -3,6 +3,7 @@ package Model;
 import Model.Enums.PetType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,10 +11,18 @@ import java.util.Set;
 
 @Entity
 public class AreaOfExpertise implements Serializable {
+
+    public AreaOfExpertise() { }
+
+    public AreaOfExpertise(PetType type) {
+        this.type = type;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PetType type;
 

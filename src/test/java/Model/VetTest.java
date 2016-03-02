@@ -1,7 +1,6 @@
 package Model;
 
 import Model.Enums.PetType;
-import Model.Enums.WeekDay;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
@@ -12,6 +11,24 @@ import static org.junit.Assert.assertEquals;
 
 public class VetTest {
 
+    Set<ConstraintViolation<Vet>> cv;
+
+    AreaOfExpertise area = new AreaOfExpertise(PetType.bird);
+
+    @Test
+    public void vetValid()  {
+        String username = "username";
+        String password = "123456";
+        String ic = "1234567890";
+
+        Vet vet = new Vet(username, password, ic);
+        vet.addArea(area);
+
+        cv = Helper.instance.validator.validate(vet);
+
+        assertEquals(0, cv.size());
+    }
+
     @Test
     public void usernameNull()  {
 
@@ -20,9 +37,9 @@ public class VetTest {
         String ic = "1234567890";
 
         Vet vet = new Vet(username, password, ic);
-        
+        vet.addArea(area);
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
+        cv = Helper.instance.validator.validate(vet);
 
         assertEquals(1, cv.size());
         assertEquals("may not be null", cv.iterator().next().getMessage());
@@ -37,8 +54,9 @@ public class VetTest {
         String ic = "1234567890";
 
         Vet vet = new Vet(username, password, ic);
+        vet.addArea(area);
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
+        cv = Helper.instance.validator.validate(vet);
 
         assertEquals(1, cv.size());
         assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
@@ -54,8 +72,9 @@ public class VetTest {
         String ic = "1234567890";
 
         Vet vet = new Vet(username, password, ic);
+        vet.addArea(area);
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
+        cv = Helper.instance.validator.validate(vet);
 
         assertEquals(1, cv.size());
         assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
@@ -69,8 +88,9 @@ public class VetTest {
         String ic = "1234567890";
 
         Vet vet = new Vet(username, password, ic);
+        vet.addArea(area);
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
+        cv = Helper.instance.validator.validate(vet);
 
         assertEquals(1, cv.size());
         assertEquals("may not be null", cv.iterator().next().getMessage());
@@ -84,10 +104,10 @@ public class VetTest {
         Date dob = null;
 
         Vet vet = new Vet(username, password, ic);
-
+        vet.addArea(area);
         vet.setDob(dob);
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
+        cv = Helper.instance.validator.validate(vet);
 
         assertEquals(0, cv.size());
     }
@@ -99,8 +119,9 @@ public class VetTest {
         String ic = null;
 
         Vet vet = new Vet(username, password, ic);
+        vet.addArea(area);
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
+        cv = Helper.instance.validator.validate(vet);
 
         assertEquals(1, cv.size());
         assertEquals("may not be null", cv.iterator().next().getMessage());
@@ -113,51 +134,28 @@ public class VetTest {
         String ic = "1234567890";
 
         Vet vet = new Vet(username, password, ic);
+        vet.addArea(area);
         vet.setDob(Helper.instance.tomorrow);
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
+        cv = Helper.instance.validator.validate(vet);
 
         assertEquals(1, cv.size());
         assertEquals("must be in the past", cv.iterator().next().getMessage());
     }
-
+    
     @Test
-    public void addSameWorkingDay()  {
+    public void vetExpertiseNull() {
         String username = "username";
         String password = "123456";
         String ic = "1234567890";
 
         Vet vet = new Vet(username, password, ic);
 
-        Rota rota = new Rota();
-        rota.setDay(WeekDay.Monday);
+        cv = Helper.instance.validator.validate(vet);
 
-        vet.addRota(rota);
-        vet.addRota(rota);
+        assertEquals(1, cv.size());
+        assertEquals("min size must be 1", cv.iterator().next().getMessage());
 
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
-
-        assertEquals(0, cv.size());
     }
-
-    @Test
-    public void addSameAreaOfExperise()  {
-        String username = "username";
-        String password = "123456";
-        String ic = "1234567890";
-
-        Vet vet = new Vet(username, password, ic);
-
-        AreaOfExpertise area = new AreaOfExpertise();
-        area.setType(PetType.bird);
-
-        vet.addArea(area);
-        vet.addArea(area);
-
-        Set<ConstraintViolation<Vet>> cv = Helper.instance.validator.validate(vet);
-
-        assertEquals(0, cv.size());
-    }
-
 
 }

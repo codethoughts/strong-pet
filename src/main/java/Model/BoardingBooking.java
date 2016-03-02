@@ -2,6 +2,7 @@ package Model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,15 +15,18 @@ public class BoardingBooking implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Future
     private Date check_in;
 
+    @NotNull
     @Future
     private Date check_out;
 
     @Embedded
     private BoardingPetStatus status;
 
+    @NotNull
     @OneToOne
     private Pet pet;
 

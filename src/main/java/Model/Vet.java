@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,7 @@ public class Vet extends User {
             orphanRemoval = true)
     private Set<Appointment> appointments = new HashSet<>();
 
+    @Size(min = 1, message = "min size must be 1")
     @ManyToMany(mappedBy = "vets", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<AreaOfExpertise> areaOfExpertise = new HashSet<>();
 

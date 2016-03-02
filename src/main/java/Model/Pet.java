@@ -4,6 +4,7 @@ import Model.Enums.GenderType;
 import Model.Enums.PetType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.util.Date;
 
@@ -24,6 +25,7 @@ public class Pet extends UUIDEntity {
             orphanRemoval = true)
     private BoardingBooking booking;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PetType type;
 
@@ -35,6 +37,7 @@ public class Pet extends UUIDEntity {
     @Past
     private Date dob;
 
+    @NotNull
     @ManyToOne
     private Customer owner;
 
