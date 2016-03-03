@@ -3,9 +3,5 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk6
-before_script:
-  - pip install --user codecov
-after_success:
-  - codecov
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  after_success:
+    - mvn clean test jacoco:report coveralls:report
