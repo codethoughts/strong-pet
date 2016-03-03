@@ -3,6 +3,7 @@ package Model;
 import Model.Enums.PetStatus;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,12 +13,15 @@ import java.util.Date;
 @Embeddable
 public class BoardingPetStatus implements Serializable {
 
+  @Past
   private Date last_fed;
+
+  @Past
   private Date last_status_update;
+
   private PetStatus status;
 
   public BoardingPetStatus() {
-
   }
 
   public Date getLastFed() {
@@ -32,7 +36,7 @@ public class BoardingPetStatus implements Serializable {
     return last_status_update;
   }
 
-  public void setLastStatusUpdate( Date last_status_update ) {
+  private void setLastStatusUpdate( Date last_status_update ) {
     this.last_status_update = last_status_update;
   }
 

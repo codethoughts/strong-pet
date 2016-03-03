@@ -38,8 +38,20 @@ public class BoardingTest {
     assertEquals("must be in the future", cv.iterator().next().getMessage());
   }
 
+  @Test
   public void checkInAfterCheckOut() {
-    // @TODO write custom validation
+    BoardingBooking booking = new BoardingBooking();
+    Pet pet = new Pet();
+    booking.setPet(pet);
+
+    booking.setCheckIn(Helper.instance.afterTomorrow);
+    booking.setCheckOut(Helper.instance.tomorrow);
+
+    Set<ConstraintViolation<BoardingBooking>> cv = Helper.instance.validator.validate(booking);
+
+    assertEquals(1, cv.size());
+    assertEquals("check in must be before check out", cv.iterator().next()
+            .getMessage());
   }
 
   @Test

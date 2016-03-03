@@ -1,6 +1,7 @@
 package Model;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -9,8 +10,11 @@ import java.io.Serializable;
 @Embeddable
 public class HealthRecord implements Serializable {
 
+  @NotNull
   private String diagnosis;
+  @NotNull
   private String prognosis;
+  @NotNull
   private String statement;
 
   public String getDiagnosis() {

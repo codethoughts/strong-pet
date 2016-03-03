@@ -13,13 +13,15 @@ public class Phone implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @NotNull(message = "must have a number")
   @NaturalId
-  @NotNull
   private String number;
 
+  @NotNull(message = "must have a type")
   @Enumerated(EnumType.STRING)
   private PhoneType type;
 
+  @NotNull(message = "must have an owner")
   @ManyToOne
   private Person person;
 
