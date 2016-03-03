@@ -43,7 +43,7 @@ public class BoardingTest {
   }
 
   @Test
-  public void noPet() {
+  public void petUndefined() {
     BoardingBooking booking = new BoardingBooking();
     booking.setCheckIn(Helper.instance.tomorrow);
     booking.setCheckOut(Helper.instance.tomorrow);

@@ -30,7 +30,7 @@ public class VetTest {
   }
 
   @Test
-  public void usernameNull() {
+  public void usernameUndefined() {
 
     String username = null;
     String password = "123456";
@@ -82,7 +82,7 @@ public class VetTest {
   }
 
   @Test
-  public void passwordNull() {
+  public void passwordUndefined() {
     String username = "username";
     String password = null;
     String ic = "1234567890";
@@ -97,7 +97,7 @@ public class VetTest {
   }
 
   @Test
-  public void dobNull() {
+  public void dobUndefined() {
     String username = "username";
     String password = "123456";
     String ic = "1234567890";
@@ -113,7 +113,7 @@ public class VetTest {
   }
 
   @Test
-  public void icNumberNull() {
+  public void icNumberUndefined() {
     String username = "username";
     String password = "123456";
     String ic = null;
@@ -128,7 +128,7 @@ public class VetTest {
   }
 
   @Test
-  public void vetExpertiseNull() {
+  public void vetExpertiseUndefined() {
     String username = "username";
     String password = "123456";
     String ic = "1234567890";

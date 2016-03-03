@@ -17,14 +17,18 @@ public class Pet extends UUIDEntity {
           cascade = CascadeType.ALL,
           orphanRemoval = true)
   private BoardingBooking booking;
-  @NotNull
+  @NotNull(message = "must have a pet type")
   @Enumerated(EnumType.STRING)
   private PetType type;
+
   @Enumerated(EnumType.STRING)
   private GenderType gender;
+
   private String name;
+
   @Past
   private Date dob;
+
   @NotNull(message = "must have an owner")
   @ManyToOne
   private Customer owner;
