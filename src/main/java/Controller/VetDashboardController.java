@@ -8,44 +8,44 @@ import javafx.scene.control.TextField;
  * Created by Eiger on 2/23/16.
  */
 public class VetDashboardController {
-    @FXML
-    private TextField searchTxt;
-    @FXML
-    private Label vetNameLbl;
-    @FXML
-    private Label timeLbl;
+  @FXML
+  private TextField searchTxt;
+  @FXML
+  private Label vetNameLbl;
+  @FXML
+  private Label timeLbl;
 
-    @FXML
-    private void onEditProfileBtnClicked() {
+  public VetDashboardController() {
 
-    }
+  }
 
-    @FXML
-    private void onLogoutBtnClicked() {
+  @FXML
+  private void onEditProfileBtnClicked() {
 
-    }
+  }
 
-    @FXML
-    private void onMyAppointmentsBtnClicked() {
+  @FXML
+  private void onLogoutBtnClicked() {
 
-    }
+  }
 
-    @FXML
-    private void onMyCalendarBtnClicked() {
+  @FXML
+  private void onMyAppointmentsBtnClicked() {
 
-    }
+  }
 
-    @FXML
-    private void onBoardingRoomBtnClicked() {
+  @FXML
+  private void onMyCalendarBtnClicked() {
 
-    }
+  }
 
-    @FXML
-    private void initialize() {
+  @FXML
+  private void onBoardingRoomBtnClicked() {
 
-    }
+  }
 
-    public VetDashboardController() {
+  @FXML
+  private void initialize() {
 
-    }
+  }
 }

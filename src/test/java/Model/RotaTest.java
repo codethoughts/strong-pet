@@ -8,26 +8,25 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Eiger on 2/03/2016.
- */
 public class RotaTest {
 
-    @Test
-    public void RotaOverloaded()  {
+  Set<ConstraintViolation<Rota>> cv;
 
-        Rota rota = new Rota();
-        rota.setDay(WeekDay.Monday);
+  @Test
+  public void DayOverloaded() {
 
-        for (int i = 0; i <= 5; i++) {
-            new Vet().addRota(rota);
-        }
+    Rota rota = new Rota();
+    rota.setDay(WeekDay.Monday);
 
-        Set<ConstraintViolation<Rota>> cv = Helper.instance.validator.validate(rota);
-
-        assertEquals(1, cv.size());
-        assertEquals("size must be between 0 and 3", cv.iterator().next().getMessage());
-
+    for ( int i = 0; i <= 5; i++ ) {
+      new Vet().addRota(rota);
     }
+
+    cv = Helper.instance.validator.validate(rota);
+
+    assertEquals(1, cv.size());
+    assertEquals("size must be between 0 and 3", cv.iterator().next().getMessage());
+
+  }
 
 }

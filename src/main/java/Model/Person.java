@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Enums.GenderType;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,102 +14,112 @@ import java.util.Set;
 @Entity
 public abstract class Person extends UUIDEntity {
 
-    protected Person() { }
+  @NotNull
+  @Column(unique = true)
+  private String ic_number;
+  private String first_name;
+  private String last_name;
+  @Email
+  private String email;
+  @Past
+  private Date dob;
+  @Enumerated(EnumType.STRING)
+  private GenderType gender;
+  @OneToMany(mappedBy = "person",
+          cascade = CascadeType.ALL,
+          orphanRemoval = true)
+  private Set<Phone> phones = new HashSet();
+  @Embedded
+  private Address address;
 
-    protected Person(String ic_number) {
-        this.ic_number = ic_number;
-    }
+  protected Person() {
+  }
 
-    @NotNull
-    @Column(unique = true)
-    private String ic_number;
+  protected Person( String ic_number ) {
+    this.ic_number = ic_number;
+  }
 
-    private String first_name;
-    private String last_name;
+  public void addPhone( Phone phone ) {
+    phone.setPerson(this);
+    phones.add(phone);
+  }
 
-    @Past
-    private Date dob;
+  public String getEmail() {
+    return email;
+  }
 
-    @Enumerated(EnumType.STRING)
-    private GenderType gender;
+  public void setEmail( String email ) {
+    this.email = email;
+  }
 
-    @OneToMany(mappedBy = "person",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Set<Phone> phones = new HashSet();
+  public GenderType getGender() {
+    return gender;
+  }
 
-    @Embedded
-    private Address address;
+  public void setGender( GenderType gender ) {
+    this.gender = gender;
+  }
 
-    public void addPhone(Phone phone) {
-        phone.setPerson(this);
-        phones.add(phone);
-    }
+  public String getICNumber() {
+    return ic_number;
+  }
 
-    public GenderType getGender() {
-        return gender;
-    }
+  public void setICNumber( String ic_number ) {
+    this.ic_number = ic_number;
+  }
 
-    public void setGender(GenderType gender) {
-        this.gender = gender;
-    }
+  public String getFirstName() {
+    return first_name;
+  }
 
-    public void setICNumber(String ic_number) {
-        this.ic_number = ic_number;
-    }
+  public void setFirstName( String first_name ) {
+    this.first_name = first_name;
+  }
 
-    public String getICNumber() {
-        return ic_number;
-    }
+  public String getLastName() {
+    return last_name;
+  }
 
-    public String getFirstName() {
-        return first_name;
-    }
+  public void setLastName( String last_name ) {
+    this.last_name = last_name;
+  }
 
-    public void setFirstName(String first_name) {
-        this.first_name = first_name;
-    }
+  public Set<Phone> getPhones() {
+    return phones;
+  }
 
-    public String getLastName() {
-        return last_name;
-    }
+  public void setPhones( HashSet<Phone> phones ) {
+    this.phones = phones;
+  }
 
-    public void setLastName(String last_name) {
-        this.last_name = last_name;
-    }
+  public Address getAddress() {
+    return address;
+  }
 
-    public Set<Phone> getPhones() { return phones; }
+  public void setAddress( Address address ) {
+    this.address = address;
+  }
 
-    public Address getAddress() {
-        return address;
-    }
+  public Date getDob() {
+    return dob;
+  }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+  public void setDob( Date dob ) {
+    this.dob = dob;
+  }
 
-    public void setPhones(HashSet<Phone> phones) { this.phones = phones; }
+  @Override
+  public String toString() {
+    return id + ", " + first_name + ", " + last_name + ", " + dob;
+  }
 
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    @Override
-    public String toString() {
-        return id + ", " + first_name + ", " + last_name + ", " + dob;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Person)) return false;
-        Person person = (Person) o;
-        return Objects.equals(id, person.id) ||
-                Objects.equals(ic_number, person.ic_number);
-    }
+  @Override
+  public boolean equals( Object o ) {
+    if ( this == o ) return true;
+    if ( !(o instanceof Person) ) return false;
+    Person person = (Person) o;
+    return Objects.equals(id, person.id) ||
+            Objects.equals(ic_number, person.ic_number);
+  }
 
 }

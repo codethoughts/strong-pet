@@ -8,9 +8,10 @@ import javax.persistence.Entity;
 
 @Entity
 public class BoardingAssistant extends User {
-    public BoardingAssistant() {}
+  public BoardingAssistant() {
+  }
 
-    public BoardingAssistant(String username, String password, String ic_passport) {
-        super(username, password, ic_passport);
-    }
+  public BoardingAssistant( String username, String password, String ic_passport ) {
+    super(username, password, ic_passport);
+  }
 }

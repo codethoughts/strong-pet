@@ -5,12 +5,15 @@ package Model.Enums;
  */
 
 public enum PhoneType {
-    mobile("mobile"), home("home");
-    private String type;
-    PhoneType(String type) { this.type = type; }
+  mobile("mobile"), home("home");
+  private String type;
 
-    @Override
-    public String toString() {
-        return type;
-    }
+  PhoneType( String type ) {
+    this.type = type;
+  }
+
+  @Override
+  public String toString() {
+    return type;
+  }
 }

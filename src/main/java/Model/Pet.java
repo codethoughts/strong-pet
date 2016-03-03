@@ -11,89 +11,85 @@ import java.util.Date;
 @Entity
 public class Pet extends UUIDEntity {
 
-    public Pet() { }
+  @ManyToOne
+  private Appointment appointment;
+  @OneToOne(mappedBy = "pet",
+          cascade = CascadeType.ALL,
+          orphanRemoval = true)
+  private BoardingBooking booking;
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private PetType type;
+  @Enumerated(EnumType.STRING)
+  private GenderType gender;
+  private String name;
+  @Past
+  private Date dob;
+  @NotNull(message = "must have an owner")
+  @ManyToOne
+  private Customer owner;
 
-    public Pet(Customer owner) {
-        this.owner = owner;
-    }
+  public Pet() {
+  }
 
-    @ManyToOne
-    private Appointment appointment;
+  public Pet( PetType type, Customer owner ) {
+    this.owner = owner;
+    this.type = type;
+  }
 
-    @OneToOne(mappedBy = "pet",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private BoardingBooking booking;
+  public Date getDob() {
+    return dob;
+  }
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private PetType type;
+  public void setDob( Date dob ) {
+    this.dob = dob;
+  }
 
-    @Enumerated(EnumType.STRING)
-    private GenderType gender;
+  public String getName() {
+    return name;
+  }
 
-    private String name;
+  public void setName( String name ) {
+    this.name = name;
+  }
 
-    @Past
-    private Date dob;
+  public GenderType getGender() {
+    return gender;
+  }
 
-    @NotNull
-    @ManyToOne
-    private Customer owner;
+  public void setGender( GenderType gender ) {
+    this.gender = gender;
+  }
 
-    public Date getDob() {
-        return dob;
-    }
+  public PetType getType() {
+    return type;
+  }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
+  public void setType( PetType type ) {
+    this.type = type;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public Customer getOwner() {
+    return owner;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setOwner( Customer customer ) {
+    this.owner = customer;
+  }
 
-    public GenderType getGender() {
-        return gender;
-    }
+  public Appointment getAppointment() {
+    return appointment;
+  }
 
-    public void setGender(GenderType gender) {
-        this.gender = gender;
-    }
+  public void setAppointment( Appointment appointment ) {
+    this.appointment = appointment;
+  }
 
-    public PetType getType() {
-        return type;
-    }
+  public BoardingBooking getBooking() {
+    return booking;
+  }
 
-    public void setType(PetType type) {
-        this.type = type;
-    }
-
-    public Customer getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Customer customer) {
-        this.owner = customer;
-    }
-
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
-    }
-
-    public Appointment getAppointment() {
-        return appointment;
-    }
-
-    public void setBooking(BoardingBooking booking) {
-        this.booking = booking;
-    }
-
-    public BoardingBooking getBooking() {
-        return booking;
-    }
+  public void setBooking( BoardingBooking booking ) {
+    this.booking = booking;
+  }
 }

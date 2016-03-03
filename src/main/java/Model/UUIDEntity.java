@@ -9,24 +9,25 @@ import java.util.UUID;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class UUIDEntity implements Serializable, Comparable<UUID> {
-    @Id
-    @GeneratedValue(generator = "hibernate-uuid")
-    @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
-    @Column(unique = true)
-    protected UUID id;
+  @Id
+  @GeneratedValue(generator = "hibernate-uuid")
+  @GenericGenerator(name = "hibernate-uuid", strategy = "uuid2")
+  @Column(unique = true)
+  protected UUID id;
 
-    public UUID getId() {
-        return id;
-    }
+  public UUIDEntity() {
+  }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public UUIDEntity() {}
+  public void setId( UUID id ) {
+    this.id = id;
+  }
 
-    @Override
-    public int compareTo(UUID o) {
-        return id.compareTo(o);
-    }
+  @Override
+  public int compareTo( UUID o ) {
+    return id.compareTo(o);
+  }
 }

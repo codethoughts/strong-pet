@@ -7,79 +7,79 @@ import javax.persistence.Persistence;
 import java.util.ArrayList;
 
 
-enum Connection { jpa }
+enum Connection {jpa}
 
-public class HibernateConnector < T extends Object, Serializable > {
+public class HibernateConnector <T extends Object, Serializable> {
 
-    public static HibernateConnector instance;
+  public static HibernateConnector instance;
 
-    private  static EntityManager em;
+  private static EntityManager em;
 
-    static {
+  static {
         /* Init hibernate factory and session in compile time */
 
-        instance = new HibernateConnector();
+    instance = new HibernateConnector();
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Connection.jpa.name());
-        em = emf.createEntityManager();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Connection.jpa.name());
+    em = emf.createEntityManager();
 
-    }
+  }
 
-    private HibernateConnector() {
+  private HibernateConnector() {
 
         /* Close persistence manager when application shuts down */
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> em.close()));
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> em.close()));
 
-    }
+  }
 
-    protected EntityTransaction transaction() {
-        return em.getTransaction();
-    }
+  protected EntityTransaction transaction() {
+    return em.getTransaction();
+  }
 
-    public T searchID(String id, Class<T> type) {
-        transaction().begin();
+  public T searchID( String id, Class<T> type ) {
+    transaction().begin();
 
-        T result = em.find(type, id);
+    T result = em.find(type, id);
 
-        transaction().commit();
+    transaction().commit();
 
-        return result;
-    }
+    return result;
+  }
 
-    public T search(Object id, Class<T> type) {
-        transaction().begin();
+  public T search( Object id, Class<T> type ) {
+    transaction().begin();
 
-        T result = em.find(type, id);
+    T result = em.find(type, id);
 
-        transaction().commit();
+    transaction().commit();
 
-        return result;
-    }
+    return result;
+  }
 
-    public ArrayList<T> search(String query, Class<T> type) {
-        transaction().begin();
+  public ArrayList<T> search( String query, Class<T> type ) {
+    transaction().begin();
 
-        ArrayList<T> searchResults = (ArrayList<T>) em.createQuery(query, type).getResultList();
+    ArrayList<T> searchResults = (ArrayList<T>) em.createQuery(query, type).getResultList();
 
-        transaction().commit();
+    transaction().commit();
 
-        return searchResults;
-    }
+    return searchResults;
+  }
 
-    public void persist(T obj) {
-        transaction().begin();
+  public void persist( T obj ) {
+    transaction().begin();
 
-        em.persist(obj);
+    em.persist(obj);
 
-        transaction().commit();
-    }
+    transaction().commit();
+  }
 
-    public void remove(T obj) {
-        transaction().begin();
+  public void remove( T obj ) {
+    transaction().begin();
 
-        em.remove(obj);
+    em.remove(obj);
 
-        transaction().commit();
-    }
+    transaction().commit();
+  }
 
 }

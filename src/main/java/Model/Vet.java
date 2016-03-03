@@ -12,68 +12,74 @@ import java.util.Set;
 @Entity
 public class Vet extends User {
 
-    private String cabinet;
+  private String cabinet;
+  @OneToMany(mappedBy = "vet",
+          cascade = CascadeType.ALL,
+          orphanRemoval = true)
+  private Set<Appointment> appointments = new HashSet<>();
+  @Size(min = 1, message = "min size must be 1")
+  @ManyToMany(mappedBy = "vets", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+  private Set<AreaOfExpertise> areaOfExpertise = new HashSet<>();
+  @ManyToMany(mappedBy = "vets", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+  private Set<Rota> rota = new HashSet<>();
 
-    public Vet() { }
+  public Vet() {
+  }
 
-    public Vet(String username, String password, String ic_passport) {
-        super(username, password, ic_passport);
-    }
+  public Vet( String username, String password, String ic_passport ) {
+    super(username, password, ic_passport);
+  }
 
-    @OneToMany(mappedBy = "vet",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Set<Appointment> appointments = new HashSet<>();
+  public Set<Appointment> getAppointments() {
+    return appointments;
+  }
 
-    @Size(min = 1, message = "min size must be 1")
-    @ManyToMany(mappedBy = "vets", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<AreaOfExpertise> areaOfExpertise = new HashSet<>();
+  public void setAppointments( Set<Appointment> appointments ) {
+    this.appointments = appointments;
+  }
 
-    @ManyToMany(mappedBy = "vets", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Rota> rota = new HashSet<>();
+  public String getCabinet() {
+    return cabinet;
+  }
 
-    public void setAppointments(Set<Appointment> appointments) {
-        this.appointments = appointments;
-    }
+  public void setCabinet( String cabinet ) {
+    this.cabinet = cabinet;
+  }
 
-    public Set<Appointment> getAppointments() {
-        return appointments;
-    }
+  public Set<Rota> getRota() {
+    return rota;
+  }
 
-    public String getCabinet() { return cabinet; }
+  public void setWorkingDays( Set<Rota> rota ) {
+    this.rota = rota;
+  }
 
-    public void setCabinet(String cabinet) { this.cabinet = cabinet; }
+  public void addAppointment( Appointment appointment ) {
+    appointment.setVet(this);
+    appointments.add(appointment);
+  }
 
-    public Set<Rota> getRota() { return rota; }
+  public void removeAppointment( Appointment appointment ) {
+    appointments.remove(appointment);
+  }
 
-    public void setWorkingDays(Set<Rota> rota) { this.rota = rota; }
+  public void addRota( Rota rota ) {
+    this.rota.add(rota);
+    rota.getVets().add(this);
+  }
 
-    public void addAppointment(Appointment appointment) {
-        appointment.setVet(this);
-        appointments.add(appointment);
-    }
+  public void addArea( AreaOfExpertise area ) {
+    areaOfExpertise.add(area);
+    area.getVets().add(this);
+  }
 
-    public void removeAppointment(Appointment appointment) {
-        appointments.remove(appointment);
-    }
+  public void removeRota( Rota rota ) {
+    this.rota.remove(rota);
+    rota.getVets().remove(this);
+  }
 
-    public void addRota(Rota rota) {
-        this.rota.add(rota);
-        rota.getVets().add(this);
-    }
-
-    public void addArea(AreaOfExpertise area) {
-        areaOfExpertise.add(area);
-        area.getVets().add(this);
-    }
-
-    public void removeRota(Rota rota) {
-        this.rota.remove(rota);
-        rota.getVets().remove(this);
-    }
-
-    public void removeArea(AreaOfExpertise area) {
-        areaOfExpertise.remove(area);
-        area.getVets().remove(this);
-    }
+  public void removeArea( AreaOfExpertise area ) {
+    areaOfExpertise.remove(area);
+    area.getVets().remove(this);
+  }
 }

@@ -11,44 +11,45 @@ import java.util.Set;
 
 @Entity
 public class Rota implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @NaturalId
-    @Enumerated(EnumType.STRING)
-    private WeekDay day;
+  @NaturalId
+  @Enumerated(EnumType.STRING)
+  private WeekDay day;
 
-    @Size(max = 3)
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(joinColumns = { @JoinColumn( referencedColumnName = "id" )},
-            inverseJoinColumns = { @JoinColumn( referencedColumnName = "id" )})
-    private Set<Vet> vets = new HashSet<>();
+  @Size(max = 3)
+  @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+  @JoinTable(joinColumns = { @JoinColumn(referencedColumnName = "id") },
+          inverseJoinColumns = { @JoinColumn(referencedColumnName = "id") })
+  private Set<Vet> vets = new HashSet<>();
 
-    public Rota() { }
+  public Rota() {
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setId( Integer id ) {
+    this.id = id;
+  }
 
-    public WeekDay getDay() {
-        return day;
-    }
+  public WeekDay getDay() {
+    return day;
+  }
 
-    public void setDay(WeekDay day) {
-        this.day = day;
-    }
+  public void setDay( WeekDay day ) {
+    this.day = day;
+  }
 
-    public Set<Vet> getVets() {
-        return vets;
-    }
+  public Set<Vet> getVets() {
+    return vets;
+  }
 
-    public void setVets(Set<Vet> vets) {
-        this.vets = vets;
-    }
+  public void setVets( Set<Vet> vets ) {
+    this.vets = vets;
+  }
 
 }

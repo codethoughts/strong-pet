@@ -11,151 +11,150 @@ import static org.junit.Assert.assertEquals;
 
 public class VetTest {
 
-    Set<ConstraintViolation<Vet>> cv;
+  Set<ConstraintViolation<Vet>> cv;
 
-    AreaOfExpertise area = new AreaOfExpertise(PetType.bird);
+  AreaOfExpertise area = new AreaOfExpertise(PetType.bird);
 
-    @Test
-    public void vetValid()  {
-        String username = "username";
-        String password = "123456";
-        String ic = "1234567890";
+  @Test
+  public void vetValid() {
+    String username = "username";
+    String password = "123456";
+    String ic = "1234567890";
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(0, cv.size());
-    }
+    assertEquals(0, cv.size());
+  }
 
-    @Test
-    public void usernameNull()  {
+  @Test
+  public void usernameNull() {
 
-        String username = null;
-        String password = "123456";
-        String ic = "1234567890";
+    String username = null;
+    String password = "123456";
+    String ic = "1234567890";
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(1, cv.size());
-        assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals(1, cv.size());
+    assertEquals("may not be null", cv.iterator().next().getMessage());
 
-    }
+  }
 
-    @Test
-    public void passwordTooShort()  {
+  @Test
+  public void passwordTooShort() {
 
-        String username = "username";
-        String password = "123";
-        String ic = "1234567890";
+    String username = "username";
+    String password = "123";
+    String ic = "1234567890";
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(1, cv.size());
-        assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
+    assertEquals(1, cv.size());
+    assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
 
-    }
+  }
 
-    @Test
-    public void passwordTooLong()  {
+  @Test
+  public void passwordTooLong() {
 
-        String username = "username";
-        String _10ch = "1234567890";
-        String password = _10ch + _10ch + _10ch;
-        String ic = "1234567890";
+    String username = "username";
+    String _10ch = "1234567890";
+    String password = _10ch + _10ch + _10ch;
+    String ic = "1234567890";
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(1, cv.size());
-        assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
+    assertEquals(1, cv.size());
+    assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
 
-    }
+  }
 
-    @Test
-    public void passwordNull()  {
-        String username = "username";
-        String password = null;
-        String ic = "1234567890";
+  @Test
+  public void passwordNull() {
+    String username = "username";
+    String password = null;
+    String ic = "1234567890";
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(1, cv.size());
-        assertEquals("may not be null", cv.iterator().next().getMessage());
-    }
+    assertEquals(1, cv.size());
+    assertEquals("may not be null", cv.iterator().next().getMessage());
+  }
 
-    @Test
-    public void dobNull()  {
-        String username = "username";
-        String password = "123456";
-        String ic = "1234567890";
-        Date dob = null;
+  @Test
+  public void dobNull() {
+    String username = "username";
+    String password = "123456";
+    String ic = "1234567890";
+    Date dob = null;
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
-        vet.setDob(dob);
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
+    vet.setDob(dob);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(0, cv.size());
-    }
+    assertEquals(0, cv.size());
+  }
 
-    @Test
-    public void icNumberNull()  {
-        String username = "username";
-        String password = "123456";
-        String ic = null;
+  @Test
+  public void icNumberNull() {
+    String username = "username";
+    String password = "123456";
+    String ic = null;
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(1, cv.size());
-        assertEquals("may not be null", cv.iterator().next().getMessage());
-    }
+    assertEquals(1, cv.size());
+    assertEquals("may not be null", cv.iterator().next().getMessage());
+  }
 
-    @Test
-    public void dobFuture()  {
-        String username = "username";
-        String password = "123456";
-        String ic = "1234567890";
+  @Test
+  public void vetExpertiseNull() {
+    String username = "username";
+    String password = "123456";
+    String ic = "1234567890";
 
-        Vet vet = new Vet(username, password, ic);
-        vet.addArea(area);
-        vet.setDob(Helper.instance.tomorrow);
+    Vet vet = new Vet(username, password, ic);
 
-        cv = Helper.instance.validator.validate(vet);
+    cv = Helper.instance.validator.validate(vet);
 
-        assertEquals(1, cv.size());
-        assertEquals("must be in the past", cv.iterator().next().getMessage());
-    }
-    
-    @Test
-    public void vetExpertiseNull() {
-        String username = "username";
-        String password = "123456";
-        String ic = "1234567890";
+    assertEquals(1, cv.size());
+    assertEquals("min size must be 1", cv.iterator().next().getMessage());
 
-        Vet vet = new Vet(username, password, ic);
+  }
 
-        cv = Helper.instance.validator.validate(vet);
+  @Test
+  public void dobFuture() {
+    String username = "username";
+    String password = "123456";
+    String ic = "1234567890";
 
-        assertEquals(1, cv.size());
-        assertEquals("min size must be 1", cv.iterator().next().getMessage());
+    Vet vet = new Vet(username, password, ic);
+    vet.addArea(area);
+    vet.setDob(Helper.instance.tomorrow);
 
-    }
+    cv = Helper.instance.validator.validate(vet);
 
+    assertEquals(1, cv.size());
+    assertEquals("must be in the past", cv.iterator().next().getMessage());
+  }
 }

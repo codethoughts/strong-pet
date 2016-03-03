@@ -9,31 +9,31 @@ import java.io.Serializable;
 @Embeddable
 public class HealthRecord implements Serializable {
 
-    private String diagnosis;
-    private String prognosis;
-    private String statement;
+  private String diagnosis;
+  private String prognosis;
+  private String statement;
 
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
-    }
+  public String getDiagnosis() {
+    return diagnosis;
+  }
 
-    public String getDiagnosis() {
-        return diagnosis;
-    }
+  public void setDiagnosis( String diagnosis ) {
+    this.diagnosis = diagnosis;
+  }
 
-    public void setPrognosis(String prognosis) {
-        this.prognosis = prognosis;
-    }
+  public String getPrognosis() {
+    return prognosis;
+  }
 
-    public String getPrognosis() {
-        return prognosis;
-    }
+  public void setPrognosis( String prognosis ) {
+    this.prognosis = prognosis;
+  }
 
-    public void setStatement(String statement) {
-        this.statement = statement;
-    }
+  public String getStatement() {
+    return statement;
+  }
 
-    public String getStatement() {
-        return statement;
-    }
+  public void setStatement( String statement ) {
+    this.statement = statement;
+  }
 }

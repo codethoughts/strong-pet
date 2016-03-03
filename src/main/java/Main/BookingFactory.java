@@ -9,14 +9,15 @@ import Model.Vet;
  * Created by Eiger on 1/03/2016.
  */
 public class BookingFactory {
-    private BookingFactory() { }
+  private BookingFactory() {
+  }
 
-    public static Appointment createAppointment(Vet vet, Pet pet) {
-        return new Appointment(vet, pet);
-    }
+  public static Appointment createAppointment( Vet vet, Pet pet ) {
+    return new Appointment(vet, pet);
+  }
 
-    public static BoardingBooking createBoardingBooking(Pet pet) {
-        return new BoardingBooking(pet);
-    }
+  public static BoardingBooking createBoardingBooking( Pet pet ) {
+    return new BoardingBooking(pet);
+  }
 
 }

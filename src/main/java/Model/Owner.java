@@ -7,9 +7,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Owner extends User {
-    public Owner() {}
+  public Owner() {
+  }
 
-    public Owner(String username, String password, String ic_passport) {
-        super(username, password, ic_passport);
-    }
+  public Owner( String username, String password, String ic_passport ) {
+    super(username, password, ic_passport);
+  }
 }

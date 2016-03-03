@@ -12,55 +12,54 @@ import java.util.Set;
 @Entity
 public class AreaOfExpertise implements Serializable {
 
-    public AreaOfExpertise() { }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private PetType type;
+  @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+  @JoinTable(joinColumns = { @JoinColumn(referencedColumnName = "id") },
+          inverseJoinColumns = { @JoinColumn(referencedColumnName = "id") })
+  private Set<Vet> vets = new HashSet<>();
 
-    public AreaOfExpertise(PetType type) {
-        this.type = type;
-    }
+  public AreaOfExpertise() {
+  }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  public AreaOfExpertise( PetType type ) {
+    this.type = type;
+  }
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private PetType type;
+  public Integer getId() {
+    return id;
+  }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(joinColumns = { @JoinColumn( referencedColumnName = "id" )},
-            inverseJoinColumns = { @JoinColumn( referencedColumnName = "id" )})
-    private Set<Vet> vets = new HashSet<>();
+  public void setId( Integer id ) {
+    this.id = id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public PetType getType() {
+    return type;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setType( PetType type ) {
+    this.type = type;
+  }
 
-    public void setType(PetType type) {
-        this.type = type;
-    }
+  public Set<Vet> getVets() {
+    return vets;
+  }
 
-    public PetType getType() {
-        return type;
-    }
+  public void setVets( Set<Vet> vets ) {
+    this.vets = vets;
+  }
 
-    public void setVets(Set<Vet> vets) {
-        this.vets = vets;
-    }
-
-    public Set<Vet> getVets() {
-        return vets;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AreaOfExpertise)) return false;
-        AreaOfExpertise that = (AreaOfExpertise) o;
-        return Objects.equals(id, that.id) ||
-                type == that.type;
-    }
+  @Override
+  public boolean equals( Object o ) {
+    if ( this == o ) return true;
+    if ( !(o instanceof AreaOfExpertise) ) return false;
+    AreaOfExpertise that = (AreaOfExpertise) o;
+    return Objects.equals(id, that.id) ||
+            type == that.type;
+  }
 }
