@@ -1,5 +1,6 @@
 package Model;
 
+import Main.HibernateConnector;
 import Model.Enums.PetType;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class VetTest {
   AreaOfExpertise area = new AreaOfExpertise(PetType.bird);
 
   @Test
-  public void vetValid() {
+  public void validVet() {
     String username = "username";
     String password = "123456";
     String ic = "1234567890";
@@ -24,13 +25,13 @@ public class VetTest {
     Vet vet = new Vet(username, password, ic);
     vet.addArea(area);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(0, cv.size());
   }
 
   @Test
-  public void usernameUndefined() {
+  public void usernameShouldBeSpecified() {
 
     String username = null;
     String password = "123456";
@@ -39,10 +40,10 @@ public class VetTest {
     Vet vet = new Vet(username, password, ic);
     vet.addArea(area);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("Username must be provided", cv.iterator().next().getMessage());
 
   }
 
@@ -56,10 +57,11 @@ public class VetTest {
     Vet vet = new Vet(username, password, ic);
     vet.addArea(area);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(1, cv.size());
-    assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
+    assertEquals("Password length should be between 6 and 20 characters",
+            cv.iterator().next().getMessage());
 
   }
 
@@ -74,15 +76,15 @@ public class VetTest {
     Vet vet = new Vet(username, password, ic);
     vet.addArea(area);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(1, cv.size());
-    assertEquals("size must be between 6 and 20", cv.iterator().next().getMessage());
+    assertEquals("Password length should be between 6 and 20 characters", cv.iterator().next().getMessage());
 
   }
 
   @Test
-  public void passwordUndefined() {
+  public void passwordShouldBeProvided() {
     String username = "username";
     String password = null;
     String ic = "1234567890";
@@ -90,10 +92,10 @@ public class VetTest {
     Vet vet = new Vet(username, password, ic);
     vet.addArea(area);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("Password must be provided", cv.iterator().next().getMessage());
   }
 
   @Test
@@ -107,13 +109,13 @@ public class VetTest {
     vet.addArea(area);
     vet.setDob(dob);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(0, cv.size());
   }
 
   @Test
-  public void icNumberUndefined() {
+  public void icNumberShouldBeProvided() {
     String username = "username";
     String password = "123456";
     String ic = null;
@@ -121,29 +123,29 @@ public class VetTest {
     Vet vet = new Vet(username, password, ic);
     vet.addArea(area);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("IC Number is compulsory field", cv.iterator().next().getMessage());
   }
 
   @Test
-  public void vetExpertiseUndefined() {
+  public void vetExpertiseShouldBeDefined() {
     String username = "username";
     String password = "123456";
     String ic = "1234567890";
 
     Vet vet = new Vet(username, password, ic);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(1, cv.size());
-    assertEquals("min size must be 1", cv.iterator().next().getMessage());
+    assertEquals("Vet should have at least 1 area of expertise", cv.iterator().next().getMessage());
 
   }
 
   @Test
-  public void dobFuture() {
+  public void dobShouldBeInPast() {
     String username = "username";
     String password = "123456";
     String ic = "1234567890";
@@ -152,9 +154,9 @@ public class VetTest {
     vet.addArea(area);
     vet.setDob(Helper.instance.tomorrow);
 
-    cv = Helper.instance.validator.validate(vet);
+    cv = HibernateConnector.instance.validator.validate(vet);
 
     assertEquals(1, cv.size());
-    assertEquals("must be in the past", cv.iterator().next().getMessage());
+    assertEquals("Date of birthday should be in past", cv.iterator().next().getMessage());
   }
 }

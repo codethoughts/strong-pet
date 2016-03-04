@@ -9,45 +9,47 @@ import static org.junit.Assert.assertEquals;
 
 public class AppointmentTest {
 
+  Set<ConstraintViolation<Appointment>> cv;
+
   @Test
-  public void appointmentWithNoPet() {
+  public void petShouldBeAssigned() {
     Vet vet = new Vet();
     Appointment appointment = new Appointment();
     appointment.setVet(vet);
     appointment.setDate(Helper.instance.tomorrow);
 
-    Set<ConstraintViolation<Appointment>> cv = Helper.instance.validator.validate(appointment);
+    cv = HibernateConnector.instance.validator.validate(appointment);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("Pet should be assigned", cv.iterator().next().getMessage());
 
   }
 
   @Test
-  public void appointmentWithNoVet() {
+  public void vetShouldBeAssigned() {
     Pet pet = new Pet();
     Appointment appointment = new Appointment();
     appointment.setPet(pet);
     appointment.setDate(Helper.instance.tomorrow);
 
-    Set<ConstraintViolation<Appointment>> cv = Helper.instance.validator.validate(appointment);
+    cv = HibernateConnector.instance.validator.validate(appointment);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("Vet should be assigned", cv.iterator().next().getMessage());
   }
 
   @Test
-  public void appointmentWithPastDate() {
+  public void dateShouldBeInFuture() {
     Vet vet = new Vet();
     Pet pet = new Pet();
 
     Appointment appointment = new Appointment(vet, pet);
     appointment.setDate(Helper.instance.yesterday);
 
-    Set<ConstraintViolation<Appointment>> cv = Helper.instance.validator.validate(appointment);
+    cv = HibernateConnector.instance.validator.validate(appointment);
 
     assertEquals(1, cv.size());
-    assertEquals("must be in the future", cv.iterator().next().getMessage());
+    assertEquals("Date should be in future", cv.iterator().next().getMessage());
   }
 
 }

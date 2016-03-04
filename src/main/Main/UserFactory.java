@@ -1,6 +1,5 @@
 package Main;
 
-import Exceptions.UserNotDefined;
 import Model.*;
 import Model.Enums.UserType;
 
@@ -14,7 +13,7 @@ public class UserFactory {
   public static User createUser( UserType type,
                                  String username,
                                  String password,
-                                 String ic_passport ) throws UserNotDefined {
+                                 String ic_passport ) {
 
     switch ( type ) {
       case vet:
@@ -25,9 +24,9 @@ public class UserFactory {
         return new Owner(username, password, ic_passport);
       case assistant:
         return new BoardingAssistant(username, password, ic_passport);
+      default:
+        return null;
     }
-    throw new UserNotDefined(type);
-
   }
 
 }

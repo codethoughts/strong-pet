@@ -1,5 +1,6 @@
 package Model;
 
+import Main.HibernateConnector;
 import Model.Enums.PetStatus;
 import org.junit.Test;
 
@@ -13,27 +14,30 @@ import static org.junit.Assert.assertEquals;
  */
 public class BoardingStatusTest {
 
+  Set<ConstraintViolation<BoardingPetStatus>> cv;
+
   @Test
-  public void lastFedDateFuture() {
+  public void lastFedUpdateShouldBeInPast() {
     BoardingPetStatus status = new BoardingPetStatus();
     status.setLastFed(Helper.instance.tomorrow);
 
-    Set<ConstraintViolation<BoardingPetStatus>> cv = Helper.instance.validator.validate
+    cv = HibernateConnector.instance.validator.validate
             (status);
 
     assertEquals(1, cv.size());
-    assertEquals("must be in the past", cv.iterator().next().getMessage());
+    assertEquals("Fed date should be in past", cv.iterator().next().getMessage());
   }
 
   @Test
-  public void lastStatusUpdatePast() {
+  public void lastPetStatusUpdateShouldBeInPast() {
     BoardingPetStatus status = new BoardingPetStatus();
     status.setStatus(PetStatus.Normal);
 
-    Set<ConstraintViolation<BoardingPetStatus>> cv = Helper.instance.validator.validate
+    cv = HibernateConnector.instance.validator.validate
             (status);
 
     assertEquals(0, cv.size());
   }
+
 
 }

@@ -1,5 +1,6 @@
 package Model;
 
+import Main.HibernateConnector;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
@@ -9,44 +10,47 @@ import static org.junit.Assert.assertEquals;
 
 public class HealthRecordTest {
 
+  Set<ConstraintViolation<HealthRecord>> cv;
+
   @Test
-  public void diagnosisUndefined() {
+  public void diagnosisShouldBeSpecified() {
     HealthRecord record = new HealthRecord();
     record.setPrognosis("");
     record.setStatement("");
 
-    Set<ConstraintViolation<HealthRecord>> cv = Helper.instance.validator.validate
+    cv = HibernateConnector.instance.validator.validate
             (record);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("Diagnosis should be specified", cv.iterator().next().getMessage());
 
   }
 
   @Test
-  public void prognosisUndefined() {
+  public void prognosisShouldBeSpecified() {
     HealthRecord record = new HealthRecord();
     record.setDiagnosis("");
     record.setStatement("");
 
-    Set<ConstraintViolation<HealthRecord>> cv = Helper.instance.validator.validate
+    cv = HibernateConnector.instance.validator.validate
             (record);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("Prognosis should be specified", cv.iterator().next().getMessage());
   }
 
   @Test
-  public void medicalStatementUndefined() {
+  public void medicalStatementShouldBeSpecified() {
     HealthRecord record = new HealthRecord();
     record.setPrognosis("");
     record.setDiagnosis("");
 
-    Set<ConstraintViolation<HealthRecord>> cv = Helper.instance.validator.validate
+    cv = HibernateConnector.instance.validator.validate
             (record);
 
     assertEquals(1, cv.size());
-    assertEquals("may not be null", cv.iterator().next().getMessage());
+    assertEquals("Medical statement should be specified", cv.iterator().next().getMessage
+            ());
   }
 
 }

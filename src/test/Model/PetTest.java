@@ -1,5 +1,6 @@
 package Model;
 
+import Main.HibernateConnector;
 import Model.Enums.PetType;
 import org.junit.Test;
 
@@ -13,25 +14,25 @@ public class PetTest {
   Set<ConstraintViolation<Pet>> cv;
 
   @Test
-  public void ownerUndefined() {
+  public void petShouldHaveOwner() {
     Pet pet = new Pet(PetType.bird, null);
 
-    cv = Helper.instance.validator.validate(pet);
+    cv = HibernateConnector.instance.validator.validate(pet);
 
     assertEquals(1, cv.size());
-    assertEquals("must have an owner", cv.iterator().next().getMessage());
+    assertEquals("Pet should have an owner", cv.iterator().next().getMessage());
   }
 
   @Test
-  public void petTypeUndefined() {
+  public void petTypeShouldBeSpecified() {
     Pet pet = new Pet();
     Customer owner = new Customer();
     owner.addPet(pet);
 
-    cv = Helper.instance.validator.validate(pet);
+    cv = HibernateConnector.instance.validator.validate(pet);
 
     assertEquals(1, cv.size());
-    assertEquals("must have a pet type", cv.iterator().next().getMessage());
+    assertEquals("Pet type should be specified", cv.iterator().next().getMessage());
   }
 
 }

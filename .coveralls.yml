@@ -1,3 +1,0 @@
-env:
-  - TOKEN=COVERALLS_TOKEN
-repo_token: TOKEN

@@ -1,5 +1,6 @@
 package Model;
 
+import Main.HibernateConnector;
 import Model.Enums.WeekDay;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class RotaTest {
   Set<ConstraintViolation<Rota>> cv;
 
   @Test
-  public void DayOverloaded() {
+  public void rotaOverloaded() {
 
     Rota rota = new Rota();
     rota.setDay(WeekDay.Monday);
@@ -22,10 +23,10 @@ public class RotaTest {
       new Vet().addRota(rota);
     }
 
-    cv = Helper.instance.validator.validate(rota);
+    cv = HibernateConnector.instance.validator.validate(rota);
 
     assertEquals(1, cv.size());
-    assertEquals("size must be between 0 and 3", cv.iterator().next().getMessage());
+    assertEquals("Rota limit is 3 vet per day", cv.iterator().next().getMessage());
 
   }
 
